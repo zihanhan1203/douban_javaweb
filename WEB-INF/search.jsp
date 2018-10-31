@@ -69,7 +69,7 @@
                 }
                 try {
                     String url = "jdbc:mysql://localhost:3306/douban_rocketgirl101_group?serverTimezone=UTC&useSSL=" +
-                            "false&autoReconnect=true&failOverReadOnly=false";
+                            "false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=UTF-8";
                     String user = "root";
                     String password = "123456";
                     conn = DriverManager.getConnection(url, user, password);
@@ -78,8 +78,7 @@
                     e.printStackTrace();
                 }
                 try {
-                    String get_person_info = "select * from base_data where ID like '%"
-                            + name_or_id + "%' or name like '%" + name_or_id + "%'";
+                    String get_person_info = String.format("SELECT * FROM base_data WHERE ID LIKE '%%%s%%' OR name LIKE '%%%s%%'", name_or_id, name_or_id);
                     res = st.executeQuery(get_person_info);
                     if (res.next()) {
                         res.previous();
@@ -108,7 +107,7 @@
                             int comment_got = Integer.parseInt(res.getString(5));
                             int sum = comment + post*5 + comment_got;
                             String achievement = "";
-                            if (sum >= 0.0 && sum <= 500) {
+                            if (sum >= 0 && sum <= 500) {
                                 achievement = "节奏学徒";
                             } else if (sum <= 1000) {
                                 achievement = "节奏弟弟";
@@ -136,7 +135,7 @@
                     } else {
                         out.println("<a>没有找到该研究员, 好气哦!!!</a>");
                     }
-                } catch (java.sql.SQLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

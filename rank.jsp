@@ -50,7 +50,7 @@
         .customer tr.alt td
         {
             color:#000000;
-            background-color:#AB34B4;
+            background-color:#FFD9EC;
             text-align: center;
         }
 
@@ -89,6 +89,10 @@
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String today_table = sdf.format(Calendar.getInstance().getTime());
+            String[] each = today_table.split("_");
+            if(each[2].charAt(0) == '0'){
+                today_table = each[0] + "_" + each[1] + "_" + each[2].substring(1,2);
+            }
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             calendar.add(calendar.DATE, -1);

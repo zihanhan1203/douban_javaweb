@@ -12,7 +12,7 @@
     <link rel="icon" href="<%=request.getContextPath()%>/Image/icon.jpeg" type="image/x-icon">
     <title>你想的人</title>
     <style>
-        .tabNav a:hover{
+        .customer a:hover{
             color: #ec55be;
             cursor: pointer;
         }
@@ -48,17 +48,26 @@
         .customer tr.alt td
         {
             color:#000000;
-            background-color:#AB34B4;
+            background-color:#FFD9EC;
             text-align: center;
         }
-        </style>
+    </style>
+    <script>
+        function get_to_id(id) {
+            window.location.href = "./person.jsp?id="+id;
+        }
+    </script>
 </head>
 <body>
+    <div class="bg-top" style="margin-bottom: 100px">
+        <img src="<%=request.getContextPath()%>/Image/bgofsearch.jpeg" width="100%">
+    </div>
     <%! Connection conn; Statement st; ResultSet res;%>
     <div class="customer">
         <%
             request.setCharacterEncoding("utf-8");
             String name_or_id = request.getParameter("name_or_id");
+            String ip = request.getRemoteAddr();
             if(name_or_id == ""){
                 out.print("<a>东西都不输入，你想搜什么？？？</a>");
             }else {
@@ -121,7 +130,8 @@
                             out.println(
                                     "<td>" + (i + 1) + "</td>" +
                                             "<td>" + res.getString(1) + "</td>" +
-                                            "<td>" + res.getString(2) + "</td>" +
+                                            "<td><a onclick=\"get_to_id("+ res.getString(1) + ")\">"
+                                            + res.getString(2) + "</a></td>" +
                                             "<td>" + res.getString(4) + "</td>" +
                                             "<td>" + res.getString(3) + "</td>" +
                                             "<td>" + res.getString(5) + "</td>" +
@@ -133,7 +143,7 @@
                         }
                         out.println("</table>");
                     } else {
-                        out.println("<a>没有找到该研究员, 好气哦!!!</a>");
+                        out.println("没有找到该研究员, 好气哦!!!");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

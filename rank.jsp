@@ -18,10 +18,13 @@
             color: #ec55be;
             cursor: pointer;
         }
+        .customer a:hover{
+            color: #ec55be;
+            cursor: pointer;
+        }
         div {
             text-align: center;
         }
-
         .customer
         {
             font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -66,6 +69,9 @@
                 }
             }
         }
+        function get_to_id(id) {
+            window.location.href = "./person.jsp?id="+id;
+        }
     </script>
 </head>
 <body>
@@ -89,10 +95,6 @@
             SimpleDateFormat sdf = new SimpleDateFormat(format);
             sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             String today_table = sdf.format(Calendar.getInstance().getTime());
-            String[] each = today_table.split("_");
-            if(each[2].charAt(0) == '0'){
-                today_table = each[0] + "_" + each[1] + "_" + each[2].substring(1,2);
-            }
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             calendar.add(calendar.DATE, -1);
@@ -116,7 +118,7 @@
         <div class="tab" style="margin-top: 3%">
             <div id="tab1" class="customer">
                 <%
-                    out.println("<a>" + today_table + "</a>");
+                    out.println(today_table);
                     try{
                         rs = conn.getMetaData().getTables(null, null, today_table, null);
                         if(rs.next()){
@@ -155,7 +157,8 @@
                                 out.println(
                                                 "<td>" + (i+1) + "</td>" +
                                                 "<td>" + res.getString(1) + "</td>" +
-                                                "<td>" + res.getString(2) + "</td>" +
+                                                "<td><a onclick=\"get_to_id("+ res.getString(1) + ")\">"
+                                                        + res.getString(2) + "</a></td>" +
                                                 "<td>" + res.getString(4) + "</td>" +
                                                 "<td>" + res.getString(3) + "</td>" +
                                                 "<td>" + res.getString(5) + "</td>" +
@@ -166,7 +169,7 @@
                             }
                             out.println("</table>");
                         }else{
-                            out.println("<a>暂时还没有数据</a>");
+                            out.println("暂时还没有数据");
                         }
                     }catch (java.sql.SQLException e){
                         e.printStackTrace();
@@ -175,7 +178,7 @@
             </div>
             <div id="tab2" class="customer" style="display: none">
                 <%
-                    out.println("<a>" + yesterday_table + "</a>");
+                    out.println(yesterday_table);
                     try{
                         rs = conn.getMetaData().getTables(null, null, yesterday_table, null);
                         if(rs.next()){
@@ -214,7 +217,8 @@
                                 out.println(
                                         "<td>" + (i+1) + "</td>" +
                                                 "<td>" + res.getString(1) + "</td>" +
-                                                "<td>" + res.getString(2) + "</td>" +
+                                                "<td><a onclick=\"get_to_id("+ res.getString(1) + ")\">"
+                                                + res.getString(2) + "</a></td>" +
                                                 "<td>" + res.getString(4) + "</td>" +
                                                 "<td>" + res.getString(3) + "</td>" +
                                                 "<td>" + res.getString(5) + "</td>" +
@@ -225,7 +229,7 @@
                             }
                             out.println("</table>");
                         }else{
-                            out.println("<a>暂时还没有数据</a>");
+                            out.println("暂时还没有数据");
                         }
                     }catch (java.sql.SQLException e){
                         e.printStackTrace();
@@ -244,7 +248,6 @@
                                             "<th>ID</th>" +
                                             "<th>名字</th>" +
                                             "<th>发言数</th>" +
-                                            "<th>收到点赞数</th>" +
                                             "<th>开贴数</th>" +
                                             "<th>收到评论数</th>" +
                                             "<th>总分</th>" +
@@ -273,7 +276,8 @@
                                 out.println(
                                         "<td>" + (i+1) + "</td>" +
                                                 "<td>" + res.getString(1) + "</td>" +
-                                                "<td>" + res.getString(2) + "</td>" +
+                                                "<td><a class=\"click\" onclick=\"get_to_id("+ res.getString(1) + ")\">"
+                                                + res.getString(2) + "</a></td>" +
                                                 "<td>" + res.getString(4) + "</td>" +
                                                 "<td>" + res.getString(3) + "</td>" +
                                                 "<td>" + res.getString(5) + "</td>" +
@@ -284,7 +288,7 @@
                             }
                             out.println("</table>");
                         }else{
-                            out.println("<a>暂时还没有数据</a>");
+                            out.println("暂时还没有数据");
                         }
                     }catch (java.sql.SQLException e){
                         e.printStackTrace();

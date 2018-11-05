@@ -23,7 +23,7 @@
             String url = "jdbc:mysql://localhost:3306/douban_rocketgirl101_group?serverTimezone=UTC&useSSL=" +
                     "false&autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=UTF-8";
             String user = "root";
-            String password = "hjp00hxl";
+            String password = "123456";
             conn = DriverManager.getConnection(url, user, password);
             st = conn.createStatement();
         } catch (java.sql.SQLException e) {

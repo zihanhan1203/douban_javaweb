@@ -6,9 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.sql.Connection,java.sql.DriverManager" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.TimeZone" %>
@@ -58,6 +56,12 @@
           }
 
       </style>
+      <script>
+          function get_to_cprank() {
+              window.location.href = "./cprank.jsp";
+          }
+      </script>
+
   </head>
   <body>
     <div class="content">
@@ -95,6 +99,9 @@
         <div style="margin-bottom: 25px">
             <a href="${pageContext.request.contextPath}/rank" style="display: block;text-align: center; color: #ec55be; text-decoration:none;">研究员势力榜</a>
         </div>
+        <div style="margin-bottom: 25px">
+            <a onclick="get_to_cprank()" style="display: block;text-align: center; color: #ec55be; cursor: pointer">CP101投票通道</a>
+        </div>
         <%! Connection conn; Statement st; ResultSet res;%>
         <%
             String format="yyyy_MM_dd";
@@ -128,6 +135,32 @@
                     System.out.print("no");
                 }
             }catch (java.sql.SQLException e){
+                e.printStackTrace();
+            }
+        %>
+        <%
+            try {
+                if(res != null)
+                    res.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(res != null)
+                    res.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(st != null)
+                    st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(conn != null)
+                    conn.close();
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         %>
